@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.klec.importexcel.mapper.MeterMapper">
+
+    <insert id="save">
+        INSERT INTO t_d_meter (meter_id, cons_no, cons_name, update_time, cons_address, asset_id, bar_code)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.meterId},
+            #{item.consNo},
+            #{item.consName},
+            #{item.updateTime},
+            #{item.consAddress},
+            #{item.barCode},
+            #{item.barCode}
+            )
+        </foreach>
+    </insert>
+
+    <insert id="saveBox">
+        INSERT INTO t_d_meter_box (box_id, asset_id, bar_code)
+        values
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.boxId},
+            #{item.boxBarCode},
+            #{item.boxBarCode}
+            )
+        </foreach>
+    </insert>
+
+
+    <insert id="saveData">
+        INSERT INTO t_d_meter (meter_id, cons_no, cons_name, update_time, cons_address, asset_id, bar_code)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (
+            #{item.meterId},
+            #{item.consNo},
+            #{item.consName},
+            #{item.updateTime},
+            #{item.consAddress},
+            #{item.assetId},
+            #{item.barCode}
+            )
+        </foreach>
+    </insert>
+
+
+</mapper>
