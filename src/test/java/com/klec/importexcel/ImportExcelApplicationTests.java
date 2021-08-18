@@ -6,7 +6,7 @@ import com.alibaba.excel.read.metadata.ReadSheet;
 import com.klec.importexcel.model.Meter;
 import com.klec.importexcel.service.MeterService;
 import com.klec.importexcel.utils.MeterDataListener;
-import com.klec.importexcel.utils.NoModelDataListener;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -20,7 +20,7 @@ class ImportExcelApplicationTests {
 
   @Test
   void contextLoads() {
-    String fileName = "/Users/ss/Documents" + File.separator + "工作簿4.xlsx";
+    String fileName = "/Users/ss/Documents" + File.separator + "完成巡视计量箱.xls";
     ExcelReader excelReader = null;
     try {
       excelReader =
@@ -33,12 +33,5 @@ class ImportExcelApplicationTests {
         excelReader.finish();
       }
     }
-  }
-
-  @Test
-  public void noModelRead() {
-    String fileName = "/Users/ss/Documents" + File.separator + "ss.xlsx";
-    // 这里 只要，然后读取第一个sheet 同步读取会自动finish
-    EasyExcel.read(fileName, new NoModelDataListener(meterService)).sheet().doRead();
   }
 }

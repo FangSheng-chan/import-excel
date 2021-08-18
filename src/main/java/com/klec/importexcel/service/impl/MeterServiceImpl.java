@@ -6,8 +6,7 @@ import com.klec.importexcel.service.MeterService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author fangsheng
@@ -20,27 +19,16 @@ public class MeterServiceImpl implements MeterService {
 
   @Override
   public void save(List<Meter> list) {
-    meterMapper.save(list);
-    meterMapper.saveBox(list);
+    meterMapper.save2(list);
   }
 
   @Override
-  public void saveData(List<Map<Integer, String>> list) {
-    Meter meter = new Meter();
-    for (Map<Integer, String> map : list) {
-      for (Map.Entry<Integer, String> entry : map.entrySet()) {
-        Integer key = entry.getKey();
-        switch (key) {
-          case 0:
-            continue;
-          case 1:
-            meter.setMeterId(Long.valueOf(entry.getValue()));
-          case 2:
-            meter.setConsName(entry.getValue());
-        }
-      }
-    }
+  public void saveBox(List<Meter> list) {
+    meterMapper.saveBox2(list);
+  }
 
-    meterMapper.saveData(list);
+  @Override
+  public void saveMeterBoxRelation(List<Meter> list) {
+    meterMapper.saveMeterBoxRelation(list);
   }
 }

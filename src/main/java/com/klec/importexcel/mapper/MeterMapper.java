@@ -3,6 +3,7 @@ package com.klec.importexcel.mapper;
 import com.klec.importexcel.model.Meter;
 import org.apache.ibatis.annotations.Mapper;
 
+
 import java.util.List;
 import java.util.Map;
 
@@ -12,9 +13,15 @@ import java.util.Map;
  */
 @Mapper
 public interface MeterMapper {
-  void save(List<Meter> list);
+  void save2(List<Meter> list);
 
-  void saveBox(List<Meter> list);
+  void save(Meter meter);
+
+  void saveBox2(List<Meter> list);
+
+  void saveBox(Meter meter);
+
+  void saveMeterBoxRelation(List<Meter> list);
 
   void saveData(List<Map<Integer, String>> list);
 }

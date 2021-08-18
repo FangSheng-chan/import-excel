@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.klec.importexcel.mapper.MeterMapper">
 
-    <insert id="save">
+    <insert id="save2" useGeneratedKeys="true" keyProperty="meterId" keyColumn="meter_id">
         INSERT INTO t_d_meter (meter_id, cons_no, cons_name, update_time, cons_address, asset_id, bar_code)
         VALUES
         <foreach collection="list" item="item" index="index" separator=",">
@@ -19,25 +19,20 @@
         </foreach>
     </insert>
 
-    <insert id="saveBox">
-        INSERT INTO t_d_meter_box (box_id, asset_id, bar_code)
-        values
+    <insert id="saveBox2" useGeneratedKeys="true" keyProperty="boxId" keyColumn="box_id">
+        INSERT INTO t_d_meter_box (asset_id,bar_code)
+        VALUES
         <foreach collection="list" item="item" index="index" separator=",">
-            (
-            #{item.boxId},
-            #{item.boxBarCode},
-            #{item.boxBarCode}
-            )
+            (#{item.boxBarCode},#{item.boxBarCode})
         </foreach>
     </insert>
 
 
     <insert id="saveData">
-        INSERT INTO t_d_meter (meter_id, cons_no, cons_name, update_time, cons_address, asset_id, bar_code)
+        INSERT INTO t_d_meter (cons_no, cons_name, update_time, cons_address, asset_id, bar_code)
         VALUES
         <foreach collection="list" item="item" index="index" separator=",">
             (
-            #{item.meterId},
             #{item.consNo},
             #{item.consName},
             #{item.updateTime},
@@ -48,5 +43,28 @@
         </foreach>
     </insert>
 
+    <insert id="saveMeterBoxRelation">
+        INSERT INTO t_d_box_and_meter (box_id, meter_id)
+        VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.boxId},#{item.meterId})
+        </foreach>
+    </insert>
 
+    <insert id="saveBox" useGeneratedKeys="true" keyProperty="boxId">
+        INSERT INTO t_d_meter_box (asset_id, bar_code)
+        values (#{boxBarCode},
+                #{boxBarCode})
+    </insert>
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="meterId">
+        INSERT INTO t_d_meter (meter_id, cons_no, cons_name, update_time, cons_address, asset_id, bar_code)
+        values (#{meterId},
+                #{consNo},
+                #{consName},
+                #{updateTime},
+                #{consAddress},
+                #{barCode},
+                #{barCode})
+    </insert>
 </mapper>
