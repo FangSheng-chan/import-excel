@@ -24,4 +24,10 @@ public interface MeterMapper {
   void saveMeterBoxRelation(List<Meter> list);
 
   void saveData(List<Map<Integer, String>> list);
+
+  Meter queryByBarCode(String barCode);
+
+  Meter query(String barCode);
+
+  void saveMeterBoxRelationShip(Long boxId, Long meterId);
 }

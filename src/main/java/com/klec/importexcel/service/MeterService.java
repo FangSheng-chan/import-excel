@@ -18,4 +18,6 @@ public interface MeterService {
 
     void saveMeterBoxRelation(List<Meter> list);
 
+    void saveMeter(List<Meter> list);
+
 }

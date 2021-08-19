@@ -20,7 +20,7 @@ public class MeterDataListener extends AnalysisEventListener<Meter> {
   private static final Logger LOGGER = LoggerFactory.getLogger(MeterDataListener.class);
 
   /** 每隔30条存储数据库，实际使用中可以3000条，然后清理list ，方便内存回收 */
-  private static final int BATCH_COUNT = 3;
+  private static final int BATCH_COUNT = 3000;
 
   Map<String, Meter> map = new TreeMap<>();
 
@@ -36,11 +36,11 @@ public class MeterDataListener extends AnalysisEventListener<Meter> {
 
   @Override
   public void invoke(Meter meter, AnalysisContext analysisContext) {
-    list.add(meter);
-    result.add(meter);
-    map.put(meter.getBoxBarCode(), meter);
+        list.add(meter);
+    //    result.add(meter);
+    //    map.put(meter.getBoxBarCode(), meter);
     if (list.size() >= BATCH_COUNT) {
-      saveData();
+      saveData2();
       list.clear();
     }
   }
@@ -66,17 +66,21 @@ public class MeterDataListener extends AnalysisEventListener<Meter> {
   @Override
   public void doAfterAllAnalysed(AnalysisContext analysisContext) {
     List<Meter> MeterList = new ArrayList<>();
-    saveData();
-    for (Map.Entry<String, Meter> entry : map.entrySet()) {
-      Meter value = entry.getValue();
-      MeterList.add(value);
-    }
-    meterService.saveBox(MeterList);
-    meterService.saveMeterBoxRelation(result);
-    LOGGER.info("全部数据解析完毕");
+    saveData2();
+    //    for (Map.Entry<String, Meter> entry : map.entrySet()) {
+    //      Meter value = entry.getValue();
+    //      MeterList.add(value);
+    //    }
+    //    meterService.saveBox(MeterList);
+    //    meterService.saveMeterBoxRelation(result);
+    //    LOGGER.info("全部数据解析完毕");
   }
 
   private void saveData() {
     meterService.save(list);
+  }
+
+  private void saveData2() {
+    meterService.saveMeter(list);
   }
 }
