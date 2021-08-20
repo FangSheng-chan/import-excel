@@ -20,10 +20,10 @@
     </insert>
 
     <insert id="saveBox2" useGeneratedKeys="true" keyProperty="boxId" keyColumn="box_id">
-        INSERT INTO t_d_meter_box (asset_id,bar_code)
+        INSERT INTO t_d_meter_box (bar_code)
         VALUES
         <foreach collection="list" item="item" index="index" separator=",">
-            (#{item.boxBarCode},#{item.boxBarCode})
+            (#{item.boxBarCode})
         </foreach>
     </insert>
 
@@ -52,13 +52,12 @@
     </insert>
     <insert id="saveMeterBoxRelationShip" parameterType="Long">
         INSERT INTO t_d_box_and_meter (box_id, meter_id)
-        VALUES
-            (#{boxId}, #{meterId})
+        VALUES (#{boxId}, #{meterId})
     </insert>
+
     <insert id="saveBox" useGeneratedKeys="true" keyProperty="boxId">
-        INSERT INTO t_d_meter_box (asset_id, bar_code)
-        values (#{boxBarCode},
-                #{boxBarCode})
+        INSERT INTO t_d_meter_box (bar_code)
+        values (#{boxBarCode})
     </insert>
 
     <insert id="save" useGeneratedKeys="true" keyProperty="meterId">
@@ -82,5 +81,10 @@
         select meter_id, bar_code
         from t_d_meter
         where bar_code = #{barCode}
+    </select>
+
+    <select id="queryAll" resultType="com.klec.importexcel.model.Meter">
+        select box_id, asset_id, bar_code as box_bar_code
+        from t_d_meter_box
     </select>
 </mapper>

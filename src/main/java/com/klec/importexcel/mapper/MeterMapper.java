@@ -30,4 +30,6 @@ public interface MeterMapper {
   Meter query(String barCode);
 
   void saveMeterBoxRelationShip(Long boxId, Long meterId);
+
+  List<Meter> queryAll();
 }

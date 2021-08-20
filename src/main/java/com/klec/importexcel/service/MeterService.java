@@ -12,12 +12,15 @@ import java.util.Set;
  */
 public interface MeterService {
 
-    void save(List<Meter> list);
+  void save(List<Meter> list);
 
-    void saveBox(List<Meter> list);
+  void saveBox(List<Meter> list);
 
-    void saveMeterBoxRelation(List<Meter> list);
+  void saveMeterBoxRelation(List<Meter> list);
 
-    void saveMeter(List<Meter> list);
+  void saveMeter(List<Meter> list);
 
+  void importMeter(List<Meter> list);
+
+  List<Meter> queryAll();
 }

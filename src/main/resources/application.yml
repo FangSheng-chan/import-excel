@@ -4,6 +4,7 @@ spring:
   datasource:
     password: Hello.001
     url: jdbc:mysql://127.0.0.1:3306/meter_box_system?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useLegacyDatetimeCode=false&nullNamePatternMatchesAll=true&zeroDateTimeBehavior=CONVERT_TO_NULL&tinyInt1isBit=false&autoReconnect=true&useSSL=false&pinGlobalTxToPhysicalConnection=true&allowMultiQueries=true
+#    url: jdbc:mysql://192.168.1.242:3306/meter_box_system?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useLegacyDatetimeCode=false&nullNamePatternMatchesAll=true&zeroDateTimeBehavior=CONVERT_TO_NULL&tinyInt1isBit=false&autoReconnect=true&useSSL=false&pinGlobalTxToPhysicalConnection=true&allowMultiQueries=true
     driverClassName: com.mysql.cj.jdbc.Driver
     username: root
     druid:

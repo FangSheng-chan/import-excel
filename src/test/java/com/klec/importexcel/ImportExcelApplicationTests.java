@@ -7,6 +7,7 @@ import com.klec.importexcel.model.Meter;
 import com.klec.importexcel.service.MeterService;
 import com.klec.importexcel.utils.MeterDataListener;
 
+import com.klec.importexcel.utils.MeterDataListener2;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -20,11 +21,12 @@ class ImportExcelApplicationTests {
 
   @Test
   void contextLoads() {
+//    String fileName = "/Users/ss/Documents" + File.separator + "工作簿4.xlsx";
     String fileName = "/Users/ss/Documents" + File.separator + "完成巡视计量箱.xls";
     ExcelReader excelReader = null;
     try {
       excelReader =
-          EasyExcel.read(fileName, Meter.class, new MeterDataListener(meterService)).build();
+          EasyExcel.read(fileName, Meter.class, new MeterDataListener2(meterService)).build();
       ReadSheet readSheet = EasyExcel.readSheet(0).build();
       excelReader.read(readSheet);
     } finally {

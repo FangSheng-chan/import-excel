@@ -10,20 +10,17 @@ import org.slf4j.LoggerFactory;
 
 import javax.annotation.Resource;
 import java.util.*;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 /**
  * @author fangsheng
  * @date 2021/8/17 3:18 下午
  */
-public class MeterDataListener extends AnalysisEventListener<Meter> {
+public class MeterDataListener2 extends AnalysisEventListener<Meter> {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(MeterDataListener.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(MeterDataListener2.class);
 
   /** 每隔30条存储数据库，实际使用中可以3000条，然后清理list ，方便内存回收 */
-  private static final int BATCH_COUNT = 3;
+  private static final int BATCH_COUNT = 3000;
 
   Map<String, Meter> map = new TreeMap<>();
 
@@ -31,11 +28,9 @@ public class MeterDataListener extends AnalysisEventListener<Meter> {
 
   List<Meter> result = new ArrayList<>();
 
-  private static final ExecutorService executorService = Executors.newFixedThreadPool(3);
-
   @Resource private MeterService meterService;
 
-  public MeterDataListener(MeterService meterService) {
+  public MeterDataListener2(MeterService meterService) {
     this.meterService = meterService;
   }
 
@@ -43,9 +38,7 @@ public class MeterDataListener extends AnalysisEventListener<Meter> {
   public void invoke(Meter meter, AnalysisContext analysisContext) {
     list.add(meter);
     if (list.size() >= BATCH_COUNT) {
-      //      saveData2();
-      Todo();
-      //      saveData();
+      saveData2();
       list.clear();
     }
   }
@@ -70,55 +63,30 @@ public class MeterDataListener extends AnalysisEventListener<Meter> {
 
   @Override
   public void doAfterAllAnalysed(AnalysisContext analysisContext) {
-    //    saveData2();
-    //    Todo();
-    LOGGER.info("全部数据解析完毕");
+    saveData2();
+    //    List<Meter> MeterList = new ArrayList<>();
+    //    for (Map.Entry<String, Meter> entry : map.entrySet()) {
+    //      Meter value = entry.getValue();
+    //      MeterList.add(value);
+    //    }
+    //    meterService.saveBox(MeterList);
+    //    meterService.saveMeterBoxRelation(result);
+    //    LOGGER.info("全部数据解析完毕");
   }
 
   private void saveData() {
     meterService.save(list);
   }
 
-  Set<Meter> set = new TreeSet<>(Comparator.comparing(Meter::getBoxBarCode));
-
-  private void Todo() {
-    List<Meter> result = new ArrayList<>();
-    List<Meter> meters = distinctExcel(list);
-    List<Meter> meterList = distinctDataBase();
-    result.addAll(meters);
-    result.addAll(meterList);
-    set.addAll(result);
-
-    //    CountDownLatch countDownLatch = new CountDownLatch(list.size());
-    //    try {
-    //      executorService.execute(
-    //              () -> {
-    //                distinctDataBase();
-    //                countDownLatch.countDown();
-    //              });
-    //      countDownLatch.await();
-    //    } catch (InterruptedException e) {
-    //      e.printStackTrace();
-    //    }
-  }
-
   private List<Meter> distinctExcel(List<Meter> list) {
     Set<Meter> set = new TreeSet<>(Comparator.comparing(Meter::getBoxBarCode));
+
     set.addAll(list);
+
     return new ArrayList<>(set);
   }
 
-  private List<Meter> distinctDataBase() {
-    List<Meter> meters = meterService.queryAll();
-    if (meters != null) {
-      Set<Meter> set = new TreeSet<>(Comparator.comparing(Meter::getBoxBarCode));
-      set.addAll(meters);
-      return new ArrayList<>(set);
-    }
-    return new ArrayList<>();
-  }
-
-  private void insert(List list) {
-    meterService.saveBox(list);
+  private void saveData2() {
+    meterService.saveMeter(list);
   }
 }
